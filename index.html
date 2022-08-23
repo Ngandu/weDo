@@ -63,9 +63,9 @@
         <!-- Modal -->
         <div id="modal">
             <h4>New todo</h4>
-            <form action="" method="post">
-                <input type="text" name="title">
-                <input type="date" name="tododate">
+            <form id="addForm">
+                <input type="text" class="newTitle" name="title" required>
+                <input type="date" class="newDate" name="tododate" required>
                 <p>
                     <button type="submit" class="addTodo">+ Add</button>
                     <button type="button" class="cancelTodo">Cancel</button>
