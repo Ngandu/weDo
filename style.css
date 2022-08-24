@@ -81,11 +81,11 @@ body{
     align-self: center;
 }
 
-.listItem.active{
+.listItem.complete{
     color: #999999;
 }
 
-.listItem.active span{
+.listItem.complete span{
     background-color: #50dd67;
     border-color: #2aba41;
 }
