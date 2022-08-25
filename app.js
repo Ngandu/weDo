@@ -3,12 +3,36 @@ const todoAddButton = document.querySelector(".addButton");
 const modalCover = document.querySelector(".cover");
 const addTodo = document.querySelector(".addTodo");
 const listView = document.querySelector(".todo_list");
+const menuButton = document.querySelector(".menuButton");
+const deleteButton = document.querySelector(".deleteButton");
+let menuOpen = false;
 
 // Data
-let todos = [
-  {date: "2022-08-25", isComplete: true, title: "Boom"},
-  {date: "2022-08-16", isComplete: false, title: "Scrutny"}
-];
+// let todos = [
+//   {date: "2022-08-25", isComplete: true, title: "Boom"},
+//   {date: "2022-08-16", isComplete: false, title: "Scrutny"}
+// ];
+
+
+/*    ----- UI -----   */
+
+menuButton.addEventListener('click', ()=>{
+  if(!menuOpen){
+    todoAddButton.classList.add("move");
+    deleteButton.classList.add("move");
+    document.querySelector(".fa-bars").classList.add("hide");
+    document.querySelector(".fa-close").classList.remove("hide");
+    menuOpen = !menuOpen;
+  }else if(menuOpen){
+    todoAddButton.classList.remove("move");
+    deleteButton.classList.remove("move");
+    document.querySelector(".fa-bars").classList.remove("hide");
+    document.querySelector(".fa-close").classList.add("hide");
+    menuOpen = !menuOpen;
+  }
+})
+
+let todos = [];
 
 // Funstions
 
@@ -30,6 +54,19 @@ const complete = (i)=>{
 
 // Render the list on the screen
 const renderList = ()=>{
+
+  // Check whether todos has items
+  if(todos.length == 0){
+
+    let template = `<div class="intMessage">
+
+                        <h3>Nothing to do here</h3>
+                        <p>You an create your list.</p>
+
+                    </div>`;
+    listView.insertAdjacentHTML('beforeend', template);
+    return
+  }
 
   for(i in todos){
     let td = todos[i];
@@ -93,7 +130,31 @@ addTodo.addEventListener("click", ()=>{
 
 })
 
-// Start the App
-  renderList();
-const initApp = ()=>{
+const initApp = async ()=>{
+
+  // Check if there is data in the localstorage
+  let localData = await localStorage.getItem("weDoData");
+  console.log("localData: ",localData);
+
+  let data = JSON.parse(localData);
+  console.log("Data: ",data);
+
+  if(data.length > 0){
+    todos = data;
+  }
+
+  // Render the list on the screen
+    renderList();
 }
+
+// Start the App
+initApp();
+
+
+window.addEventListener('beforeunload', function (e) {
+    // Load the array in localstorage
+    let data = JSON.stringify(todos);
+    localStorage.setItem("weDoData", data);
+    e.preventDefault();
+    e.returnValue = '';
+});
