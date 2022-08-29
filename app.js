@@ -32,6 +32,25 @@ menuButton.addEventListener('click', ()=>{
   }
 })
 
+// Date
+
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+let now = new Date();
+
+let month = months[now.getMonth()];
+let today = now.getDate();
+let year = now.getFullYear();
+let dayOfWeek = now.getDay();
+
+document.querySelector('.date').innerHTML = today;
+document.querySelector('.month').innerHTML = month;
+document.querySelector('.year').innerHTML = year;
+document.querySelector('.today_txt > p').innerHTML = weekday[dayOfWeek];
+
+console.log(month);
+
 let todos = [];
 
 // Funstions
@@ -146,6 +165,8 @@ const initApp = async ()=>{
   // Render the list on the screen
     renderList();
 }
+
+
 
 // Start the App
 initApp();
