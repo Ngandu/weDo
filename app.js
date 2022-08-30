@@ -32,6 +32,19 @@ menuButton.addEventListener('click', ()=>{
   }
 })
 
+// Delete All Task marked as complete
+deleteButton.addEventListener('click', ()=>{
+
+  // Filter through all array and return those that are not done
+  let newTodos = todos.filter((elm)=>{
+    return !elm.isComplete
+  });
+
+  todos = newTodos;
+  refreshList();
+
+})
+
 // Date
 
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -171,11 +184,8 @@ const initApp = async ()=>{
 // Start the App
 initApp();
 
-
+// Store App data before the window/tab closes
 window.addEventListener('beforeunload', function (e) {
-    // Load the array in localstorage
     let data = JSON.stringify(todos);
     localStorage.setItem("weDoData", data);
-    e.preventDefault();
-    e.returnValue = '';
 });
